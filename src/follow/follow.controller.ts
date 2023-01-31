@@ -14,9 +14,7 @@ import { FollowService } from './follow.service';
 
 @Controller('follow')
 export class FollowController {
-  constructor(
-    private readonly followService: FollowService,
-  ) {}
+  constructor(private readonly followService: FollowService) {}
 
   @Get()
   findAll() {
@@ -24,15 +22,10 @@ export class FollowController {
   }
 
   @Get(':id')
-  async getFollow(
-    @Param('id', ParseIntPipe) id: number,
-  ) {
-    const follow =
-      await this.followService.findOne(+id);
+  async getFollow(@Param('id', ParseIntPipe) id: number) {
+    const follow = await this.followService.findOne(+id);
     if (!follow) {
-      throw new NotFoundException(
-        'FOLLOW RECORD NOT FOUND',
-      );
+      throw new NotFoundException('FOLLOW RECORD NOT FOUND');
     }
     return this.followService.findOne(+id);
   }
@@ -51,22 +44,14 @@ export class FollowController {
     @Body()
     body: FilefollowDto,
   ) {
-    return await this.followService.update(
-      +id,
-      body,
-    );
+    return await this.followService.update(+id, body);
   }
 
   @Delete(':id')
-  async removefollow(
-    @Param('id', ParseIntPipe) id: number,
-  ) {
-    const follow =
-      await this.followService.findOne(+id);
+  async removefollow(@Param('id', ParseIntPipe) id: number) {
+    const follow = await this.followService.findOne(+id);
     if (!follow) {
-      throw new NotFoundException(
-        'FOLLOW RECORD NOT FOUND',
-      );
+      throw new NotFoundException('FOLLOW RECORD NOT FOUND');
     }
     return this.followService.remove(+id);
   }
@@ -79,9 +64,6 @@ export class FollowController {
       ncrId: number;
     },
   ) {
-    return await this.followService.assignFollow(
-      body.followId,
-      body.ncrId,
-    );
+    return await this.followService.assignFollow(body.followId, body.ncrId);
   }
 }

@@ -3,12 +3,14 @@ import {
   Body,
   Controller,
   Delete,
+  ForbiddenException,
   Get,
   NotFoundException,
   Param,
   ParseIntPipe,
   Patch,
   Post,
+  Req,
   UseGuards,
 } from '@nestjs/common';
 import { NcrService } from './ncr.service';
@@ -21,19 +23,18 @@ export class NcrController {
   constructor(private ncrService: NcrService) {}
 
   @Get()
-  getAllNcr() {
+  async getAllNcr(@Req() req) {
+    if (req.user.role !== 'admin') {
+      throw new ForbiddenException('Forbidden');
+    }
     return this.ncrService.all();
   }
 
   @Get(':id')
-  async getNcr(
-    @Param('id', ParseIntPipe) id: number,
-  ) {
+  async getNcr(@Param('id', ParseIntPipe) id: number) {
     const ncr = await this.ncrService.get(+id);
     if (!ncr) {
-      throw new NotFoundException(
-        'NCR RECORD NOT FOUND',
-      );
+      throw new NotFoundException('NCR RECORD NOT FOUND');
     }
     return this.ncrService.get(+id);
   }
@@ -47,14 +48,10 @@ export class NcrController {
   }
 
   @Delete(':id')
-  async removeNcr(
-    @Param('id', ParseIntPipe) id: number,
-  ) {
+  async removeNcr(@Param('id', ParseIntPipe) id: number) {
     const ncr = await this.ncrService.get(+id);
     if (!ncr) {
-      throw new NotFoundException(
-        'NCR RECORD NOT FOUND',
-      );
+      throw new NotFoundException('NCR RECORD NOT FOUND');
     }
     return await this.ncrService.remove(+id);
   }
@@ -65,9 +62,6 @@ export class NcrController {
     @Body()
     body: FilencrDto,
   ) {
-    return await this.ncrService.update(
-      +id,
-      body,
-    );
+    return await this.ncrService.update(+id, body);
   }
 }

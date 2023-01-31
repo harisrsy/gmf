@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,58 +8,55 @@ datasource db {
 }
 
 model ncr {
-  id                          Int @id @default(autoincrement())
-  audit_plan_no               String @unique
-  ncr_no                      String @unique
-  issued_date                 String  
-  responsibility_office       String
-  audit_type                  String
-  require_condition           String
-  level_of_finding            Int
-  problem_analysis            Boolean @default(false)  
-  answer_due_date             String
-  encountered_condition       String
-  originator                  String
-  data_send                   String
-  accepted_by                 String
-  accepted_date               String
-  reply reply []
-  follow follow []
+  id                    Int      @id @default(autoincrement())
+  audit_plan_no         String   @unique
+  ncr_no                String   @unique
+  issued_date           String
+  responsibility_office String
+  audit_type            String
+  require_condition     String
+  level_of_finding      Int
+  problem_analysis      Boolean  @default(false)
+  answer_due_date       String
+  encountered_condition String
+  originator            String
+  data_send             String
+  accepted_by           String
+  accepted_date         String
+  follow                follow[]
+  reply                 reply[]
 }
 
 model reply {
-  id            Int @id @default(autoincrement())
-  root          String
-  correct       String
-  preventive    String
-  impdate       String
-  auditee       String
-  responsby     String
-  responsdate   String
-  ncrId Int ?
-  ncr ncr? @relation(fields: [ncrId], references: [id])
+  id          Int    @id @default(autoincrement())
+  root        String
+  correct     String
+  preventive  String
+  impdate     String
+  auditee     String
+  responsby   String
+  responsdate String
+  ncrId       Int?
+  ncr         ncr?   @relation(fields: [ncrId], references: [id])
 }
 
-model follow{
-   id            Int @id @default(autoincrement())
-   ncrId Int?
-   corrective    Boolean @default(false)
-   effective     Boolean @default(false)
-   refer         String
-   new_ncr_no    String @unique
-   approved      String
-   approveddate String
-   ncr ncr? @relation(fields: [ncrId], references: [id])
-
+model follow {
+  id           Int     @id @default(autoincrement())
+  ncrId        Int?
+  corrective   Boolean @default(false)
+  effective    Boolean @default(false)
+  refer        String
+  new_ncr_no   String  @unique
+  approved     String
+  approveddate String
+  ncr          ncr?    @relation(fields: [ncrId], references: [id])
 }
 
 model user {
-  id String @id @default(uuid())
-  fullname String
-  email String @unique
-  password String
+  id        String   @id @default(uuid())
+  fullname  String
+  email     String   @unique
+  password  String
   createdAt DateTime @default(now())
+  role      String?
 }
-
-
-

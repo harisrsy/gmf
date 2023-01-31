@@ -4,23 +4,15 @@ import * as jwt from 'jsonwebtoken';
 
 @Injectable()
 export class AuthService {
-  private readonly blacklistedTokens: Set<string> =
-    new Set<string>();
+  private readonly blacklistedTokens: Set<string> = new Set<string>();
 
   constructor(private userService: UserService) {}
 
-  async authenticate(
-    email: string,
-    password: string,
-  ) {
+  async authenticate(email: string, password: string) {
     try {
-      const user =
-        await this.userService.validateUser(
-          email,
-          password,
-        );
+      const user = await this.userService.validateUser(email, password);
       const token = jwt.sign(
-        { uid: user.id },
+        { uid: user.id, role: user.role },
         process.env.SECRET_JWT,
         { expiresIn: '7d' },
       );
@@ -35,14 +27,10 @@ export class AuthService {
   }
 
   async isTokenRevoked(req: any) {
-    const authorization =
-      req.headers.authorization;
+    const authorization = req.headers.authorization;
     if (!authorization) return true;
 
-    const token = authorization.replace(
-      'Bearer ',
-      '',
-    );
+    const token = authorization.replace('Bearer ', '');
     return this.blacklistedTokens.has(token);
   }
 }
