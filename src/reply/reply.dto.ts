@@ -1,4 +1,7 @@
-import { IsNotEmpty } from 'class-validator';
+import {
+  IsDateString,
+  IsNotEmpty,
+} from 'class-validator';
 
 export class FilereplyDto {
   @IsNotEmpty()
@@ -8,11 +11,13 @@ export class FilereplyDto {
   @IsNotEmpty()
   preventive: string;
   @IsNotEmpty()
+  @IsDateString()
   impdate: string;
   @IsNotEmpty()
   auditee: string;
   @IsNotEmpty()
   responsby: string;
   @IsNotEmpty()
+  @IsDateString()
   responsdate: string;
 }

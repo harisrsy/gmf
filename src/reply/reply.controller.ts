@@ -8,10 +8,13 @@ import {
   Delete,
   NotFoundException,
   ParseIntPipe,
+  UseGuards,
 } from '@nestjs/common';
 import { ReplyService } from './reply.service';
 import { FilereplyDto } from './reply.dto';
+import { AuthGuard } from 'src/auth/guards/roles/auth.guard';
 
+@UseGuards(AuthGuard)
 @Controller('reply')
 export class ReplyController {
   constructor(
@@ -63,10 +66,18 @@ export class ReplyController {
 
   @Patch(':id')
   async updateReply(
-    @Param('id') id: number,
+    @Param('id', ParseIntPipe) id: number,
     @Body()
     body: FilereplyDto,
   ) {
+    const reply = await this.replyService.findOne(
+      +id,
+    );
+    if (!reply) {
+      throw new NotFoundException(
+        'REPLY RECORD NOT FOUND',
+      );
+    }
     return await this.replyService.update(
       +id,
       body,

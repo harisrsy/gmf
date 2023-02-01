@@ -1,14 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { FilefollowDto } from './follow.dto';
 
 @Injectable()
 export class FollowService {
-  follow(id: any, body: FilefollowDto) {
-    throw new Error('Method not implemented.');
-  }
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+  ) {}
 
   async create(data: Prisma.followCreateInput) {
     return await this.prisma.follow.create({
@@ -32,7 +30,10 @@ export class FollowService {
     });
   }
 
-  update(id: number, data: Prisma.followUpdateInput) {
+  update(
+    id: number,
+    data: Prisma.followUpdateInput,
+  ) {
     return this.prisma.follow.update({
       where: {
         id: +id,
@@ -49,7 +50,10 @@ export class FollowService {
     });
   }
 
-  async assignFollow(followId: number, ncrId: number) {
+  async assignFollow(
+    followId: number,
+    ncrId: number,
+  ) {
     return await this.prisma.follow.update({
       where: {
         id: +followId,

@@ -1,4 +1,7 @@
-import { IsNotEmpty } from 'class-validator';
+import {
+  IsDateString,
+  IsNotEmpty,
+} from 'class-validator';
 export class FilefollowDto {
   @IsNotEmpty()
   corrective: boolean;
@@ -11,5 +14,6 @@ export class FilefollowDto {
   @IsNotEmpty()
   approved: string;
   @IsNotEmpty()
+  @IsDateString()
   approveddate: string;
 }
