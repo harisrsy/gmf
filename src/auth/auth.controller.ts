@@ -1,58 +1,24 @@
-import {
-  BadRequestException,
-  Body,
-  Controller,
-  Post,
-  Request,
-} from '@nestjs/common';
-import { Delete } from '@nestjs/common/decorators';
-import { Prisma } from '@prisma/client';
+import { Body, Controller, Get, Post, Request, Response } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { UserService } from './user/user.service';
+import { AuthDto } from './dto/auth.dto';
+import { inDto } from './dto/in.dto';
 
 @Controller('auth')
 export class AuthController {
-  constructor(
-    private authService: AuthService,
-    private userService: UserService,
-  ) {}
-  @Post('login')
-  async login(
-    @Body()
-    body: {
-      email: string;
-      password: string;
-    },
-  ) {
-    try {
-      return await this.authService.authenticate(
-        body.email,
-        body.password,
-      );
-    } catch (err) {
-      throw new BadRequestException(err);
-    }
+  constructor(private authService: AuthService) {}
+
+  @Post('signup')
+  signup(@Body() dto: AuthDto) {
+    return this.authService.signup(dto);
   }
 
-  @Post('register')
-  async register(
-    @Body() body: Prisma.userCreateInput,
-  ) {
-    try {
-      return await this.userService.create(body);
-    } catch (err) {
-      throw new BadRequestException(err);
-    }
+  @Post('signin')
+  async signin(@Request() req, @Response() res, @Body() dto: inDto) {
+    return this.authService.signin(dto, req, res);
   }
 
-  @Post('logout')
-  async logout(@Request() req) {
-    this.authService.revokeToken(
-      req.headers.authorization.replace(
-        'Bearer ',
-        '',
-      ),
-    );
-    return { message: 'Successfully logged out' };
+  @Get('signout')
+  signout(@Request() req, @Response() res) {
+    return this.authService.signout(req, res);
   }
 }

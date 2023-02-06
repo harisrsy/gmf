@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 
@@ -32,9 +32,26 @@ export class NcrService {
   }
 
   async create(data: Prisma.ncrCreateInput) {
+    const { ncr_no,  } = data;
+    const ncrExists = await this.prisma.ncr.findUnique({
+      where: { ncr_no},
+    });
+
+    if (ncrExists) {
+      throw new BadRequestException('NCR No already exists');
+    }
+    const {audit_plan_no } = data;
+    const apExists = await this.prisma.ncr.findUnique({
+      where: { audit_plan_no},
+    });
+
+    if (apExists) {
+      throw new BadRequestException('Audit Plan No already exists');
+    }
     return await this.prisma.ncr.create({
       data,
     });
+    
   }
 
   async remove(id: number) {

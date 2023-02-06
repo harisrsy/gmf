@@ -1,36 +1,109 @@
-import { Injectable } from '@nestjs/common';
-import { UserService } from './user/user.service';
-import * as jwt from 'jsonwebtoken';
+import {
+  BadRequestException,
+  ForbiddenException,
+  Injectable,
+} from '@nestjs/common';
+import { PrismaService } from 'src/prisma/prisma.service';
+import { AuthDto } from './dto/auth.dto';
+import * as bcrypt from 'bcrypt';
+import { JwtService } from '@nestjs/jwt';
+import { jwtSecret } from 'src/utils/constants';
+import { Request, Response } from 'express';
+import { inDto } from './dto/in.dto';
 
 @Injectable()
 export class AuthService {
-  private readonly blacklistedTokens: Set<string> = new Set<string>();
+  constructor(private prisma: PrismaService, private jwt: JwtService) {}
 
-  constructor(private userService: UserService) {}
+  async signup(dto: AuthDto) {
+    const { email, password, role } = dto;
 
-  async authenticate(email: string, password: string) {
-    try {
-      const user = await this.userService.validateUser(email, password);
-      const token = jwt.sign(
-        { uid: user.id, role: user.role },
-        process.env.SECRET_JWT,
-        { expiresIn: '7d' },
-      );
-      return { token };
-    } catch (err) {
-      throw err;
+    const userExists = await this.prisma.user.findUnique({
+      where: { email },
+    });
+
+    if (userExists) {
+      throw new BadRequestException('Email already exists');
     }
+
+    const hashedPassword = await this.hashPassword(password);
+
+    
+    await this.prisma.user.create({
+      data: {
+        email,
+        hashedPassword,
+        role,
+      },
+    });
+
+    return { message: 'User created succefully' };
   }
 
-  revokeToken(token: string) {
-    this.blacklistedTokens.add(token);
+  async signin(dto: inDto, req: Request, res: Response) {
+    const { email, password, } = dto;
+
+    const foundUser = await this.prisma.user.findUnique({
+      where: {
+        email,
+      },
+    });
+
+    if (!foundUser) {
+      throw new BadRequestException('Wrong credentials');
+    }
+
+    const compareSuccess = await this.comparePasswords({
+      password,
+      hash: foundUser.hashedPassword,
+    });
+
+    if (!compareSuccess) {
+      throw new BadRequestException('Wrong credentials');
+    }
+
+    const token = await this.signToken({
+      userId: foundUser.id,
+      email: foundUser.email,
+      role: foundUser.role,
+    });
+
+    if (!token) {
+      throw new ForbiddenException('Could not signin');
+    }
+
+    res.cookie('token', token, {});
+
+    return res.send({ message: 'Logged in succefully' });
   }
 
-  async isTokenRevoked(req: any) {
-    const authorization = req.headers.authorization;
-    if (!authorization) return true;
+  async signout(req: Request, res: Response) {
+    res.clearCookie('token');
 
-    const token = authorization.replace('Bearer ', '');
-    return this.blacklistedTokens.has(token);
+    return res.send({ message: 'Logged out succefully' });
+  }
+
+  async hashPassword(password: string) {
+    const saltOrRounds = 10;
+
+    return await bcrypt.hash(password, saltOrRounds);
+  }
+
+  async comparePasswords(args: { hash: string; password: string }) {
+    return await bcrypt.compare(args.password, args.hash);
+  }
+
+  async signToken(args: { userId: string; email: string; role: string }) {
+    const payload = {
+      id: args.userId,
+      email: args.email,
+      role: args.role
+    };
+
+    const token = await this.jwt.signAsync(payload, {
+      secret: jwtSecret,
+    });
+
+    return token;
   }
 }

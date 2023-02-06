@@ -12,20 +12,26 @@ import {
 } from '@nestjs/common';
 import { FilefollowDto } from './follow.dto';
 import { FollowService } from './follow.service';
-import { AuthGuard } from 'src/auth/guards/roles/auth.guard';
+import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
+import { RolesGuard } from 'src/auth/guards/roles.guard';
+import { Roles } from 'src/auth/decorators/roles.decorator';
+import { Role } from 'src/auth/models/role.enum';
 
-@UseGuards(AuthGuard)
+
+
+@UseGuards(JwtAuthGuard, RolesGuard)
 @Controller('follow')
 export class FollowController {
   constructor(
     private readonly followService: FollowService,
   ) {}
-
+  
+  @Roles(Role.ADMIN, Role.USER)
   @Get()
   findAll() {
     return this.followService.findAll();
   }
-
+  @Roles(Role.ADMIN, Role.USER)
   @Get(':id')
   async getFollow(
     @Param('id', ParseIntPipe) id: number,
@@ -40,6 +46,7 @@ export class FollowController {
     return this.followService.findOne(+id);
   }
 
+  @Roles(Role.ADMIN)
   @Post()
   async addfollow(
     @Body()
@@ -48,6 +55,7 @@ export class FollowController {
     return await this.followService.create(body);
   }
 
+  @Roles(Role.ADMIN)
   @Patch(':id')
   async updateFollow(
     @Param('id', ParseIntPipe) id: number,
@@ -67,6 +75,7 @@ export class FollowController {
     );
   }
 
+  @Roles(Role.ADMIN)
   @Delete(':id')
   async removefollow(
     @Param('id', ParseIntPipe) id: number,
@@ -81,6 +90,7 @@ export class FollowController {
     return this.followService.remove(+id);
   }
 
+  @Roles(Role.ADMIN)
   @Patch('update/assign-follow')
   async assignFollow(
     @Body()

@@ -12,57 +12,74 @@ datasource db {
 
 model ncr {
   id                          Int @id @default(autoincrement())
-  audit_plan_no               String @unique
+  regbes                   String
+  subject                   String
+  audit_plan_no               String @unique()
   ncr_no                      String @unique
-  issued_date                 String  
+  issued_date                 String
   responsibility_office       String
   audit_type                  String
+  audit_scope               String
+  To_UIC                    String
+  attention                 String
   require_condition           String
   level_of_finding            Int
   problem_analysis            Boolean @default(false)  
   answer_due_date             String
+  issue_IAN                 Boolean @default(false)
+  IAN_nbr                   String
   encountered_condition       String
-  originator                  String
-  data_send                   String
-  accepted_by                 String
-  accepted_date               String
+  audited_by                String
+  audit_date                String
+  acknowledge_by            String
+  acknowledge_date          String
+  remark                    String
+  status                    String
   reply reply []
   follow follow []
 }
 
 model reply {
-  id            Int @id @default(autoincrement())
-  root          String
-  correct       String
-  preventive    String
-  impdate       String
-  auditee       String
-  responsby     String
-  responsdate   String
+  id                    Int @id @default(autoincrement())
+  RCA_problem           String
+  Corrective_Action     String
+  Preventive_Action     String
+  Identified_by_Auditee String
+  Identified_Date       String
+  Accept_by_Auditor     String
+  Auditor_Accept_date   String
   ncrId Int ?
   ncr ncr? @relation(fields: [ncrId], references: [id])
 }
 
 model follow{
-   id            Int @id @default(autoincrement())
-   ncrId Int?
-   corrective    Boolean @default(false)
-   effective     Boolean @default(false)
-   refer         String
-   new_ncr_no    String @unique
-   approved      String
-   approveddate String
-   ncr ncr? @relation(fields: [ncrId], references: [id])
+  id            Int @id @default(autoincrement())
+  ncrId Int?
+  Close_Corrective_Actions  String?
+  Proposed_Close_Auditee    String
+  Proposed_Close_Date       String
+  Implemented_close_date    String
+  Is_close                  Boolean? @default(false)
+  effectiveness             Boolean? @default(false)
+  Refer_to_Verify_Sheet     String?
+  Sheet_No                  String?
+  New_NCR_Issue_nbr         String?
+  Close_approved_by         String
+  Close_approved_date       String
+  Verified_Chief_IM         String
+  Verified_Date             String
+  ncr ncr? @relation(fields: [ncrId], references: [id])
 
 }
 
-model user {
-  id String @id @default(uuid())
-  fullname String
-  email String @unique
-  password String
+model User {
+  id    String  @unique @default(uuid())
+  //idNumber Int 
+  email String  @unique
+  hashedPassword String 
   createdAt DateTime @default(now())
-  role String 
+  updateAt DateTime @updatedAt()
+  role String?
 }
 
 

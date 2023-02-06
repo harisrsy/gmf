@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 
@@ -7,8 +7,17 @@ export class FollowService {
   constructor(
     private readonly prisma: PrismaService,
   ) {}
+  
 
-  async create(data: Prisma.followCreateInput) {
+  async create(data: Prisma.followCreateManyInput) {
+    const {ncrId} = data
+    const cek = await this.prisma.follow.findUnique({
+      where: {id: ncrId}
+    });
+
+    if (!cek) {
+      throw new BadRequestException(`NCR with id "${ncrId}" does not exist.`);
+    }
     return await this.prisma.follow.create({
       data,
     });

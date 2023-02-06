@@ -12,9 +12,12 @@ import {
 } from '@nestjs/common';
 import { ReplyService } from './reply.service';
 import { FilereplyDto } from './reply.dto';
-import { AuthGuard } from 'src/auth/guards/roles/auth.guard';
+import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
+import { Roles } from 'src/auth/decorators/roles.decorator';
+import { Role } from 'src/auth/models/role.enum';
 
-@UseGuards(AuthGuard)
+@Roles(Role.ADMIN, Role.USER)
+@UseGuards(JwtAuthGuard)
 @Controller('reply')
 export class ReplyController {
   constructor(
@@ -81,19 +84,6 @@ export class ReplyController {
     return await this.replyService.update(
       +id,
       body,
-    );
-  }
-  @Patch('update/assign-reply')
-  async assignKelas(
-    @Body()
-    body: {
-      replyId: number;
-      ncrId: number;
-    },
-  ) {
-    return await this.replyService.assignNcr(
-      body.replyId,
-      body.ncrId,
     );
   }
 }

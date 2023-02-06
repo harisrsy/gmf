@@ -1,0 +1,613 @@
+{
+	"info": {
+		"_postman_id": "f3b74877-d09a-4092-859e-c4224328f8cf",
+		"name": "GMF DMS",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25373924"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "signup",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"admin@gmail.com\",\r\n    \"password\": \"admin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/auth/signup",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "signin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"tirtot@gmail.com\",\r\n    \"password\": \"haris\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/auth/signin",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"auth",
+								"signin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ID",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"haris@gmail.com\",\r\n    \"password\": \"haris\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/users",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "signout",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/auth/signout",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"auth",
+								"signout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Initial",
+			"item": [
+				{
+					"name": "Get all ncr",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI3YmEzY2I4Zi1mOGRhLTQwODctYTY2NS03NjZiOWIyMTcwNmUiLCJpYXQiOjE2NzUwNjkwMzgsImV4cCI6MTY3NTY3MzgzOH0.VRSuJGTSS58pqD8R28arCV9FeWqHcOqsonEYqK16OLE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/ncr",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"ncr"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get NCR by 1 (id)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI3YmEzY2I4Zi1mOGRhLTQwODctYTY2NS03NjZiOWIyMTcwNmUiLCJpYXQiOjE2NzUwNjkwMzgsImV4cCI6MTY3NTY3MzgzOH0.VRSuJGTSS58pqD8R28arCV9FeWqHcOqsonEYqK16OLE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/ncr/1",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"ncr",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post NCR",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI3YmEzY2I4Zi1mOGRhLTQwODctYTY2NS03NjZiOWIyMTcwNmUiLCJpYXQiOjE2NzUwNjkwMzgsImV4cCI6MTY3NTY3MzgzOH0.VRSuJGTSS58pqD8R28arCV9FeWqHcOqsonEYqK16OLE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{   \r\n    \"regbes\": \"DGCA\",\r\n    \"subject\": \"\",\r\n    \"audit_plan_no\": \"AP-00-11311\",\r\n    \"ncr_no\": \"NCR-01-2012-R2901\",\r\n    \"issued_date\" : \"2012-01-27\",\r\n    \"responsibility_office\" : \"Design Office\",\r\n    \"audit_type\" : \"Product\",\r\n    \"audit_scope\": \"Authority\",\r\n    \"To_UIC\": \"Chief Design Office\",\r\n    \"attention\": \"Dian Rachmawati\",\r\n    \"require_condition\" : \"DP-201-01 Management of Approval , Certification Plan (Form GMF-DO-001-R1)\",\r\n    \"level_of_finding\" : 9,\r\n    \"problem_analysis\": true,\r\n    \"answer_due_date\" : \"2016-01-01\",\r\n    \"issue_IAN\": true,\r\n    \"IAN_nbr\": \"da2\",\r\n    \"encountered_condition\": \"test\",\r\n    \"audited_by\": \"Dian Rachmawati\",               \r\n    \"audit_date\" : \"2016-01-01\",              \r\n    \"acknowledge_by\" : \"Dian Rachmawati\",        \r\n    \"acknowledge_date\" : \"2016-01-01\",         \r\n    \"status\" : \"\",\r\n    \"remark\" : \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/ncr",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"ncr"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete NCR by 1 (id)",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/ncr/99",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"ncr",
+								"99"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit NCR",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI3YmEzY2I4Zi1mOGRhLTQwODctYTY2NS03NjZiOWIyMTcwNmUiLCJpYXQiOjE2NzUwNjkwMzgsImV4cCI6MTY3NTY3MzgzOH0.VRSuJGTSS58pqD8R28arCV9FeWqHcOqsonEYqK16OLE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{   \r\n    \"regbes\": \"DGCA\",\r\n    \"subject\": \"\",\r\n    \"audit_plan_no\": \"AP-00-2012\",\r\n    \"ncr_no\": \"NCR-01-2012-R0\",\r\n    \"issued_date\" : \"2012-01-27\",\r\n    \"responsibility_office\" : \"Design Office\",\r\n    \"audit_type\" : \"Procedure\",\r\n    \"audit_scope\": \"Authority\",\r\n    \"To_UIC\": \"Chief Design Office\",\r\n    \"attention\": \"EDY NOERACHMAN\",\r\n    \"require_condition\" : \"DP-201-01 Management of Approval , Certification Plan (Form GMF-DO-001-R1)\",\r\n    \"level_of_finding\" : 1,\r\n    \"problem_analysis\": true,\r\n    \"answer_due_date\" : \"2016-01-01\",\r\n    \"issue_IAN\": false,\r\n    \"IAN_nbr\": \"da2\",\r\n    \"encountered_condition\": \"test\",\r\n    \"audited_by\": \"EDY NOERACHMAN\",               \r\n    \"audit_date\" : \"2016-01-01\",              \r\n    \"acknowledge_by\" : \"EDY NOERACHMAN\",        \r\n    \"acknowledge_date\" : \"2016-01-01\",         \r\n    \"status\" : \"\",\r\n    \"remark\" : \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/ncr/1",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"ncr",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Reply",
+			"item": [
+				{
+					"name": "Get All Reply",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI3YmEzY2I4Zi1mOGRhLTQwODctYTY2NS03NjZiOWIyMTcwNmUiLCJpYXQiOjE2NzUwNjkwMzgsImV4cCI6MTY3NTY3MzgzOH0.VRSuJGTSS58pqD8R28arCV9FeWqHcOqsonEYqK16OLE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/reply",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"reply"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Reply by 1 (id)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/reply/4",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"reply",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post Reply",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI3YmEzY2I4Zi1mOGRhLTQwODctYTY2NS03NjZiOWIyMTcwNmUiLCJpYXQiOjE2NzUwNjkwMzgsImV4cCI6MTY3NTY3MzgzOH0.VRSuJGTSS58pqD8R28arCV9FeWqHcOqsonEYqK16OLE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{   \"RCA_problem\": \"- Every Personel in DOA can access to the Subject File Record (software)- Lack of Control\",           \r\n    \"Corrective_Action\" : \"Protect the File Record- Every Personal who's need booking number shold be contact to the Administration Staff Personnel under AO\",   \r\n    \"Preventive_Action\" : \"test\",    \r\n    \"Identified_by_Auditee\" : \"Edy Noerachman\",\r\n    \"Identified_Date\": \"2012-01-02\",       \r\n    \"Accept_by_Auditor\": \"Abdur Rahim\",     \r\n    \"Auditor_Accept_date\": \"2012-02-02\",  \r\n    \"ncrId\":1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/reply",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"reply"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Reply",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/reply/hhehehe",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"reply",
+								"hhehehe"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Reply",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/reply/4",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"reply",
+								"4"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Follow",
+			"item": [
+				{
+					"name": "Find All Follow",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI3YmEzY2I4Zi1mOGRhLTQwODctYTY2NS03NjZiOWIyMTcwNmUiLCJpYXQiOjE2NzUwNjkwMzgsImV4cCI6MTY3NTY3MzgzOH0.VRSuJGTSS58pqD8R28arCV9FeWqHcOqsonEYqK16OLE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/follow",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"follow"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Follow by 1 (id)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/follow/1",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"follow",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post FollowDGCA",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI3YmEzY2I4Zi1mOGRhLTQwODctYTY2NS03NjZiOWIyMTcwNmUiLCJpYXQiOjE2NzUwNjkwMzgsImV4cCI6MTY3NTY3MzgzOH0.VRSuJGTSS58pqD8R28arCV9FeWqHcOqsonEYqK16OLE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"ncrId\":1 ,\r\n  \"Close_Corrective_Actions\":\"Exhibit 1 ( Form of GMF/DO-001-R1 ) has been revised on B-1 (Issue B Revision 1 )\",  \r\n  \"Proposed_Close_Auditee\":\"Dian Rachmawati\",    \r\n  \"Proposed_Close_Date\":\"2021-01-01\",       \r\n  \"Implemented_close_date\":\"2022-02-02\",             \r\n  \"Close_approved_by\":\"Edy Noerachman\",         \r\n  \"Close_approved_date\":\"2022-02-02\",       \r\n  \"Verified_Chief_IM\":\"Edy Noerachman\",         \r\n  \"Verified_Date\":\"2022-02-02\"             \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/follow",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"follow"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post Follow EASA",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"ncrId\":1 ,\r\n  \"Close_Corrective_Actions\":\"Exhibit 1 ( Form of GMF/DO-001-R1 ) has been revised on B-1 (Issue B Revision 1 )\",  \r\n  \"Proposed_Close_Auditee\":\"Dian Rachmawati\",    \r\n  \"Proposed_Close_Date\":\"2021-01-01\",       \r\n  \"Implemented_close_date\":\"2022-02-02\",    \r\n  \"Is_close\":,                  \r\n  \"effectiveness\":,             \r\n  \"Refer_to_Verify_Sheet\":\"\",     \r\n  \"Sheet_No\":\"\",                  \r\n  \"New_NCR_Issue_nbr\":\"\",         \r\n  \"Close_approved_by\":\"\",         \r\n  \"Close_approved_date\":\"\",       \r\n  \"Verified_Chief_IM\":\"\",         \r\n  \"Verified_Date\":\"\"             }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/follow",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"follow"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Follow by 1 (id)",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/follow/90",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"follow",
+								"90"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Follow",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{   \"corrective\": false,\r\n    \"effective\": true,\r\n    \"refer\": \" NVS/E-072\",\r\n    \"new_ncr_no\": \"NVS/E-0723\",\r\n    \"approved\": \"SYAMSURISAL\",\r\n    \"approveddate\": \"30-01-2024\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/follow/1",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"follow",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Assign Follow",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"followId\" : 4,\r\n    \"ncrId\" : 2\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/follow/update/assign-follow",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"follow",
+								"update",
+								"assign-follow"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
